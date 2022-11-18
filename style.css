@@ -52,7 +52,9 @@ body{
 .twoPlayer, .computerPlayer{
 	display: none;
 	color: red;
+	margin: auto;
 }
 .selectPlay{
-	display: block;
+	display: table;
+	
 }

@@ -1,12 +1,13 @@
 let ticTak = [];
 ticTak.length = 9;
 let move = 0;
-let articul = document.querySelectorAll('.block');
+
+
 function render(){
 
 	let out = '';
 	for (let i = 0; i < ticTak.length; i++){
-		out += '<div class="block" data-id ='+i+'>  </div>';
+		out += '<div class="block" data-id = '+i+'>  </div>';
 	} 
 	$('.pole').html(out);
     ticTak = [];
@@ -20,10 +21,7 @@ function hod (){
 		let resX ='x';
 		if (event.target.className === 'block'){
 			if (move % 2 ==0){
-				hodTakMessage();
-                ticTak[event.target.dataset.id] = 'x';
-				event.target.innerHTML = 'x';
-                event.target.classList.add('X');	
+				moveFirstPlayer();
 			}else{
 				
 				hodXMessage();
@@ -38,7 +36,12 @@ console.log(ticTak);
 		
 	})
 }
-
+function moveFirstPlayer(){
+	hodTakMessage();
+                ticTak[event.target.dataset.id] = 'x';
+				event.target.innerHTML = 'x';
+                event.target.classList.add('X');
+}
 
 function winner() {
 	let pole = $('.block');
@@ -107,6 +110,9 @@ function winner() {
 	}
 	
 }
+function getRandomInt(max) {
+  return Math.floor(Math.random() * 9);
+}
 
 
 function winnerX(){
@@ -131,31 +137,53 @@ function hodTakMessage(){
 }
 
 function compPlay(){
+	
 	$('.pole').click(function (event) {
 		if (event.target.className === 'block'){
-				hodTakMessage();
-                ticTak[event.target.dataset.id] = 'x';
-				event.target.innerHTML = 'x';
-                event.target.classList.add('X');	
-			
+				moveFirstPlayer();
+			    winner();
 				
 				hodXMessage();
-				if (ticTak[4] =='x'){
-					ticTak[7] = '0';
 				
-				}
-                
+					algoritmX();
+				  winner();
 				
-			winner();
+			
 		}
 console.log(ticTak);
 		
-	})
+	});
+}
+function algoritmX(){
+	let moveComp = document.querySelectorAll('.block');
+	let flag = false;
+    
+	    while (true){
+	    
+	    	let moveCompMas = getRandomInt(8);
+            for (let i = 0; i < ticTak.length; i++){
+		        if( ticTak[i] == undefined ){
+                    ticTak[i] = i;
+		       }
+		        if(moveCompMas ==ticTak[i]){
+                        	flag = true;
+                        ticTak[moveCompMas] = '0';
+	                    moveComp[moveCompMas].innerHTML = '0';
+	                    moveComp[moveCompMas].classList.add('X');
+	                    return;
+	            }    
+	            else{
+	        	    flag = false;
+	        	    continue;
+	            }
+	        }
+
+		
+	    }	
 }
 
-
     function selectPlay() {
-    	$('.twoPlayer').after('<div class="twoPlayer">Выберите режим игры</div>')
+    	$('.computerPlayer').before('<div class="twoPlayer">Выберите режим игры</div>')
         $('.twoPlayer').addClass('selectPlay');
         $('.computerPlayer').addClass('selectPlay');
     
