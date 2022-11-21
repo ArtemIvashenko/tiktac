@@ -1,7 +1,8 @@
 let ticTak = [];
 ticTak.length = 9;
 let move = 0;
-
+let resX ='<img class="imgPlayer" src="./img/x.png">' ;
+let res0 ='<img class="imgPlayer" src="./img/0.png">' ;
 
 function render(){
 
@@ -18,7 +19,7 @@ function hod (){
 	
 	
 	$('.pole').click(function (event) {
-		let resX ='x';
+		
 		if (event.target.className === 'block'){
 			if (move % 2 ==0){
 				moveFirstPlayer();
@@ -26,7 +27,7 @@ function hod (){
 				
 				hodXMessage();
                 ticTak[event.target.dataset.id] = '0'
-				event.target.innerHTML ='0';
+				event.target.innerHTML = res0;
                 event.target.classList.add('0');	
 			}
 			move++;
@@ -39,7 +40,7 @@ console.log(ticTak);
 function moveFirstPlayer(){
 	hodTakMessage();
                 ticTak[event.target.dataset.id] = 'x';
-				event.target.innerHTML = 'x';
+				event.target.innerHTML = resX;
                 event.target.classList.add('X');
 }
 
@@ -144,8 +145,8 @@ function compPlay(){
 			    winner();
 				
 				hodXMessage();
-				
-					algoritmX();
+				setTimeout(algoritmX, 2000);
+					
 				  winner();
 				
 			
@@ -168,7 +169,7 @@ function algoritmX(){
 		        if(moveCompMas ==ticTak[i]){
                         	flag = true;
                         ticTak[moveCompMas] = '0';
-	                    moveComp[moveCompMas].innerHTML = '0';
+	                    moveComp[moveCompMas].innerHTML = res0;
 	                    moveComp[moveCompMas].classList.add('X');
 	                    return;
 	            }    
@@ -209,6 +210,7 @@ $(document).ready(function(){
     $('#reset').click(function(){
     	render();
     	hodXMessage();
+    	document.location.reload();
 
     });
     $('#start').click(function(){
